@@ -66,29 +66,30 @@ module COMET_II_top (
     //data signal declaration and connection logic
 
     wire [15:0] ALU_in0 = GR[r_r1];
-    wire [15:0] ALU_in1 = r_adr_x ? rdata    :
-                          r1_r2   ? GR[x_r2] : 16'h0000;
+    wire [15:0] ALU_in1 = shift   ? eff_adr  :               //Excecute cycle for Shift Opatation (set eff_addr)
+                          r_adr_x ? rdata    :               //Excecute cycle for r,adr[,x] mode  Opatation (set rdata) 
+                          r1_r2   ? GR[x_r2] : 16'h0000;     //Excecute cycle for r1,32 mode  Opatation (set GR[r2]) 
 
     wire [15:0] ALU_res;
     wire [2:0] ALU_FR_out;
 
-    wire [15:0] adr;
+    wire [15:0] adr; 
 
     wire  [15:0] eff_adr = (x_r2 != 4'd0) ? adr + GR[x_r2] : adr; //effective address
 
     assign we = store|push|call;
-    assign waddr = store     ? eff_adr :
-                   push|call ? SP       : 16'hxxxx;
+    assign waddr = store     ? eff_adr :                // STORE execute cycle 
+                   push|call ? SP       : 16'hxxxx;     // PUSH/CALL execute cycle
 
     assign wdata =  store ? GR[r_r1] :                  // STORE execute cycle 
-                    push  ? eff_adr :                   // PUSH execute cycle
+                    push  ? eff_adr  :                  // PUSH execute cycle
                     call  ? PR       : 16'hxxxx;        // CALL execute cycle
 
-    assign re = (ld & r_adr_x)| ALU_mode[3:1] === 3'b000 | pop | ret | inc_PR ;
+    assign re = set_FR & !shift & r_adr_x  | pop | ret | IFETCH_inc_PR ;
 
-    assign raddr = inc_PR                                    ? PR      :              // instrument fetch cycle ( set raddr to PR )
-                   pop | ret                                 ? SP      :              // POP/RET execute cycle (set raddr SP)
-                   (ld & r_adr_x)| ALU_mode[3:1] === 3'b000  ? eff_adr : 16'hxxxx;    // LD or OP(r_adr_x) exccute  execute ctcle (set raddr effective addr)
+    assign raddr = IFETCH_inc_PR             ? PR      :              // instrument fetch cycle ( set raddr to PR )
+                   pop | ret                 ? SP      :              // POP/RET execute cycle (set raddr SP)
+                   set_FR & !shift & r_adr_x ? eff_adr : 16'hxxxx;    // r_adr_x mode memory read execute cycle (set raddr effective addr)
 
                    
 
@@ -100,9 +101,11 @@ module COMET_II_top (
 
     wire adr_en;
 
-    wire inc_PR ,r_adr_x,r1_r2  ,ld
-        ,store  ,lad    ,jump   ,dec_SP
-        ,push   ,pop    ,call   ,ret;
+    wire IFETCH_inc_PR,r_adr_x,r1_r2  
+        ,set_GR_al  ,store  ,lad 
+        ,set_FR, shift,compare
+        ,jump   
+        ,dec_SP,push   ,pop    ,call   ,ret;
 
     ///////  fetch processes for each registors
 
@@ -110,11 +113,10 @@ module COMET_II_top (
         if(rst) PR = initial_PR;
         else begin
             if(stage ==INIT);
-            else if(inc_PR) PR <= PR + 1;  // instruction fetch cycle ()
-            else if(jump) begin            
-                if(ret) PR <= rdata;       //Execute Cycle for RET (jump to pop address)
-                else PR <= eff_adr;        //Execute Cycle for CALL or JUMP(positive condition)  (jump to effctive address)
-            end else;
+            else if (IFETCH_inc_PR) PR <= PR + 1;  // instruction fetch cycle ()
+            else if (ret)           PR <= rdata;   //Execute Cycle for RET (jump to pop address)        
+            else if (jump|call)     PR <= eff_adr; //Execute Cycle for CALL or JUMP(positive condition)  (jump to effctive address)
+            else;
         end
     end
 
@@ -122,7 +124,7 @@ module COMET_II_top (
         if(rst) SP <= initial_SP;
         else begin
             if(stage ==INIT);
-            else if(dec_SP) SP <= SP - 1;   //Second Instruction Cycle for PUSH/CALL (declemet SP) 
+            else if(dec_SP)  SP <= SP - 1;  //Second Instruction Cycle for PUSH/CALL (declemet SP) 
             else if(pop|ret) SP <= SP + 1 ; //Execute cycle for POP/RET execute cycle (inclement SP) 
             else;
         end
@@ -141,7 +143,7 @@ module COMET_II_top (
         end 
 
         else begin
-             if(ld) GR[r_r1] <= ALU_res;          // Execute cycle for LD or Alithmetic Instructions without CPA/CPL (set GR[r/r1] to ALU Result ) *LD cattegorized in Alithmetic Instruction for set FR by ALU
+             if(set_GR_al) GR[r_r1] <= ALU_res;    // Execute cycle for LD or Alithmetic Instructions without CPA/CPL (set GR[r/r1] to ALU Result ) *LD cattegorized in Alithmetic Instruction for set FR by ALU
              else if (lad) GR[r_r1] <= eff_adr;   // Execute cycle for (set GR[r/r1] to effective addr value)
              else if (pop) GR[r_r1] <= rdata;     // Execute cycle for (set GR[r/r1] to mem read value)
              else;
@@ -151,7 +153,7 @@ module COMET_II_top (
     always @(negedge mclk)begin
         if(rst) FR = 3'b000;
         else begin
-            if((stage==EXEC) & (ALU_mode != ALU_NOP) ) FR <= ALU_FR_out;
+            if(set_FR) FR <= ALU_FR_out;
         end
     end
 
@@ -184,12 +186,15 @@ module COMET_II_top (
         .r_r1(r_r1),
         .x_r2(x_r2),
         .ALU_mode(ALU_mode),
-        .inc_PR(inc_PR),
+        .IFETCH_inc_PR(IFETCH_inc_PR),
         .r_adr_x(r_adr_x),
         .r1_r2(r1_r2),
-        .ld(ld),
+        .set_GR_al(set_GR_al),
         .store(store),
         .lad(lad),
+        .set_FR(set_FR),
+        .shift(shift),
+        .compare(compare),
         .jump(jump),
         .dec_SP(dec_SP),
         .push(push),
