@@ -1,5 +1,5 @@
 /**************************************************************************
-/* COMET II CPU CORE
+/* COMET II CPU Top
 /*
 /**************************************************************************
 /*
@@ -8,26 +8,36 @@
 /**************************************************************************/
 
 module COMET_II_top (
+    //Master Clock
     input mclk,
-    input init,
+
+    //Software Reset (Active High)
     input rst,
 
-    input [15:0] PR_init,
+    //initialization and Boot (Active High)
+    input init,
+
+    //PR/SP Initialization Value (Not To be used)
+    input [15:0] PR_init,  
     input [15:0] SP_init,
 
+    //RAM I/F
     output re,
     output [15:0] raddr,
     input [15:0] rdata,
-
     output we,
     output [15:0] waddr,
     output [15:0] wdata,
+
+    //Stage monitor (for debug)
     output [2:0] stage
 );
+
+    //Initial Value of PR,SP
     parameter initial_PR = 16'h0000;
     parameter initial_SP = 16'h0000;  
 
-
+    //ALU Mode Control
     localparam ALU_NOP  = 4'b1111;
     localparam ALU_CPA  = 4'b0000;
     localparam ALU_CPL  = 4'b0001;
@@ -43,10 +53,11 @@ module COMET_II_top (
 
     //  Resistors Declaretuin and initiallization ///////////////////////////////////////////////////////
 
-    reg [15:0] PR = initial_PR;  //Program Counter Registor
-    reg [15:0] SP = initial_SP;  //Stack Pointer Regisor 
-    reg [15:0] GR[7:0];        //General Purpose Registor
+    reg [15:0] PR = initial_PR;  //PR - Program Registor (Program Counter)
 
+    reg [15:0] SP = initial_SP;  //SP - Stack Pointer 
+       
+    reg [15:0] GR[7:0];        //GR[0]-[7] General Purpose Registors
     initial begin
         GR[0] = 16'h0000;
         GR[1] = 16'h0000;
@@ -57,26 +68,32 @@ module COMET_II_top (
         GR[6] = 16'h0000;
         GR[7] = 16'h0000;
     end
+
     reg [2:0] FR = 3'b000;     //Flag Registor
 
+    //Wirein for debug
     wire OF = FR[2]; //Overflow Flag
     wire SF = FR[1]; //Sign Flag
     wire ZF = FR[0]; //Zero Flag
 
-    //data signal declaration and connection logic
+    ////////////////////////////////    data signal declaration and wiring logic
 
+    // ALU input data
     wire [15:0] ALU_in0 = GR[r_r1];
     wire [15:0] ALU_in1 = shift   ? eff_adr  :               //Excecute cycle for Shift Opatation (set eff_addr)
                           r_adr_x ? rdata    :               //Excecute cycle for r,adr[,x] mode  Opatation (set rdata) 
                           r1_r2   ? GR[x_r2] : 16'h0000;     //Excecute cycle for r1,32 mode  Opatation (set GR[r2]) 
-
+    
+    // ALU output data
     wire [15:0] ALU_res;
     wire [2:0] ALU_FR_out;
 
-    wire [15:0] adr; 
 
-    wire  [15:0] eff_adr = (x_r2 != 4'd0) ? adr + GR[x_r2] : adr; //effective address
+    //Calculation of Effective Address
+    wire [15:0] adr;  //adr Data from Second Word
+    wire  [15:0] eff_adr = (x_r2 != 4'd0) ? adr + GR[x_r2] : adr; //Effective address
 
+    //RAM Write I/F
     assign we = store|push|call;
     assign waddr = store     ? eff_adr :                // STORE execute cycle 
                    push|call ? SP       : 16'hxxxx;     // PUSH/CALL execute cycle
@@ -85,15 +102,14 @@ module COMET_II_top (
                     push  ? eff_adr  :                  // PUSH execute cycle
                     call  ? PR       : 16'hxxxx;        // CALL execute cycle
 
+    //RAM Read I/F
     assign re = set_FR & !shift & r_adr_x  | pop | ret | IFETCH_inc_PR ;
 
     assign raddr = IFETCH_inc_PR             ? PR      :              // instrument fetch cycle ( set raddr to PR )
                    pop | ret                 ? SP      :              // POP/RET execute cycle (set raddr SP)
                    set_FR & !shift & r_adr_x ? eff_adr : 16'hxxxx;    // r_adr_x mode memory read execute cycle (set raddr effective addr)
 
-                   
-
-    ////   controll signals declaration
+    //////////////////////////////////   controll signals declaration
     wire [7:0] op_code;
     wire [3:0] r_r1,x_r2;
 
@@ -107,8 +123,9 @@ module COMET_II_top (
         ,jump   
         ,dec_SP,push   ,pop    ,call   ,ret;
 
-    ///////  fetch processes for each registors
+    ///////////////////////////////// fetch processes for each registors (Sync Negative Edge of Master Clock)
 
+    // PR - Program Registor
     always @(negedge mclk)begin
         if(rst) PR = initial_PR;
         else begin
@@ -120,6 +137,7 @@ module COMET_II_top (
         end
     end
 
+    // SP - Stack Pointor
     always @(negedge mclk)begin
         if(rst) SP <= initial_SP;
         else begin
@@ -130,6 +148,7 @@ module COMET_II_top (
         end
     end
 
+    // GR[0] to GR[7] - General Purpose Registors
     always @(negedge mclk)begin
         if(rst) begin
             GR[0] <= 16'h0000;
@@ -150,10 +169,11 @@ module COMET_II_top (
         end
     end
 
+    // FR - Flag Registor
     always @(negedge mclk)begin
         if(rst) FR = 3'b000;
         else begin
-            if(set_FR) FR <= ALU_FR_out;
+            if(set_FR) FR <= ALU_FR_out;      ///Execute cycle for Alithmetic Instructions (include LD)
         end
     end
 
@@ -174,17 +194,14 @@ module COMET_II_top (
         .mclk(mclk),
         .init(init),
         .rst(rst),
-    
         .rdata(rdata),
         .FR(FR),
-
-        .adr(adr),
-        .adr_en(adr_en),
         .stage(stage),
-
         .op_code(op_code),
         .r_r1(r_r1),
         .x_r2(x_r2),
+        .adr(adr),
+        .adr_en(adr_en),
         .ALU_mode(ALU_mode),
         .IFETCH_inc_PR(IFETCH_inc_PR),
         .r_adr_x(r_adr_x),
@@ -202,7 +219,7 @@ module COMET_II_top (
         .call(call),
         .ret(ret)); 
 
-    // for debug
+    // wiring for debug on simulator
     wire [15:0] gr0=GR[0];
     wire [15:0] gr1=GR[1];
     wire [15:0] gr2=GR[2];

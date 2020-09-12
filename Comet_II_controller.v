@@ -10,19 +10,27 @@ module Comet_II_controller (
     input mclk,
     input init,
     input rst,
-  
+
+    //RAM Read DATA Bus 
     input [15:0] rdata,
+
+    //Frag Registor input
     input [2:0] FR,
 
-    output [15:0] adr,
-    output adr_en,
+    //CPU phase
     output [2:0] stage,
 
+    //(Instrcution Code Monitor)
     output [7:0] op_code,
     output [3:0] r_r1,
     output [3:0] x_r2,
-    output [3:0] ALU_mode,
+    output [15:0] adr,
+  
+    //adr data enable(not to be used)
+    output adr_en,
 
+    //CPU Contrall Signals
+    output [3:0] ALU_mode,
     output IFETCH_inc_PR,
     output r_adr_x,
     output r1_r2,
@@ -55,7 +63,7 @@ module Comet_II_controller (
         .state(stage)
     );
 
-
+    
     Comet_II_instrument_decoder U12(
         .state(stage),
         .FR(FR),
