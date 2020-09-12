@@ -1,6 +1,6 @@
-# TinyFPGAの勉強4
+# 仮想計算機COMET IIのVerilog　HDLでの実装
 
-TynyFPGAをターゲットとして使ったVerilog HDLとFPGAのお勉強の記録(その４)です。
+TynyFPGAをターゲットとして使ったVerilog HDLとFPGAのお勉強の記録です。
 
 IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.jitec.ipa.go.jp/1_13download/shiken_yougo_ver4_2.pdf)のVerilog HDL moduleでの実現を目指してます
 
