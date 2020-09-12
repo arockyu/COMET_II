@@ -61,8 +61,8 @@ module COMET_II_top (
 - mclk:マスタークロック入力  
 - rst:ソフトウェアリセット(Active-High)入力  
 - init:初期化及び起動(Active-High,初期設定機能は未実装)  
-- PR_init:PR初期設定値
-- SP_init:SP初期設定値  
+- PR_init:PR初期設定値(未実装アサインのみ)  
+- SP_init:SP初期設定値 (未実装アサインのみ)   
 - re:RAMリードイネーブル(Active-High)
 - raddr:RAMリードアドレス　
 - rdata:RAMリードデータ
