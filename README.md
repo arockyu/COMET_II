@@ -12,11 +12,12 @@ IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.j
 
  
 ## モジュール構成 
+
 Comet_II_topモジュール  
- - U1 Comet_II_ALUモジュール 　
- - U2 Comet_II_Controllerモジュール 　
-   U11 Comet_II_core_FSM モジュール  
-   U11 Comet_II_instrument_decoderモジュール　　
+   ⇒U1 Comet_II_ALUモジュール 　
+   ⇒U2 Comet_II_Controllerモジュール 　
+     ⇒U11 Comet_II_core_FSM モジュール  
+     ⇒U11 Comet_II_instrument_decoderモジュール　　
 
 
 
