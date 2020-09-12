@@ -1,4 +1,4 @@
-# 仮想計算機COMET IIのVerilog　HDLでの実装
+# 仮想計算機COMET IIのVerilog HDLでの実装
 
 [TynyFPGA BX]([https://tinyfpga.com/bx/guide.html)をターゲットとして使ったVerilog HDLとFPGAのお勉強の記録です。
 
