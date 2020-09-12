@@ -15,8 +15,8 @@ IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.j
 Comet_II_topモジュール  
  - U1 Comet_II_ALUモジュール 　
  - U2 Comet_II_Controllerモジュール 　
-  -- U11 Comet_II_core_FSM モジュール  
-  -- U11 Comet_II_instrument_decoderモジュール　　
+   U11 Comet_II_core_FSM モジュール  
+   U11 Comet_II_instrument_decoderモジュール　　
 
 
 
@@ -93,3 +93,6 @@ NOP命令のときのみ命令フェッチ1Word目の次の状態がみ命令フ
 ALUにFRの更新値算出の機能を集約させているためFRをが設定されるLD命令も算術演算のカテゴリに含めALUにロードデータを入力するようにしている。
 
 SCV命令は現状実装してない。
+
+## テストベンチ
+工事中
