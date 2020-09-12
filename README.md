@@ -1,6 +1,6 @@
 # 仮想計算機COMET IIのVerilog　HDLでの実装
 
-(TynyFPGA BX)[https://tinyfpga.com/bx/guide.html] をターゲットとして使ったVerilog HDLとFPGAのお勉強の記録です。
+[TynyFPGA BX]([https://tinyfpga.com/bx/guide.html)をターゲットとして使ったVerilog HDLとFPGAのお勉強の記録です。
 
 IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.jitec.ipa.go.jp/1_13download/shiken_yougo_ver4_2.pdf)のVerilog HDL moduleでの実現を目指してます
 
@@ -8,7 +8,7 @@ IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.j
 
 テストカバレッジは狭いですがまあおおむね期待の動きをしてくれてます。
 
-CPUのモジュールレベルまではターゲットのFPGAの(Lattice iCE40)[https://www.latticesemi.com/ja-JP/Products/FPGAandCPLD/iCE40] に依存しないように記述してるつもりです。
+CPUのトップモジュールレベルまではターゲットのFPGAの[Lattice iCE40](https://www.latticesemi.com/ja-JP/Products/FPGAandCPLD/iCE40)に依存しないように記述してるつもりです。
 
 上記が軌道に乗ったらプログラム書き込み /動作確認用の制御インターフェース(UARTを想定)や外部入出力をメモリマップする機能(そもそもTinyFPGAのERAMはCOMET　IIの RAM空間を満たすほどない、、、7も含めてTinyFPGA上で動くものにしていく予定(はたしていつになることやら)  
 
