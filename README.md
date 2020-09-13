@@ -10,7 +10,7 @@ IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.j
 
 CPUのトップモジュールレベルまではターゲットのFPGAの[Lattice iCE40](https://www.latticesemi.com/ja-JP/Products/FPGAandCPLD/iCE40)に依存しないように記述してるつもりです。
 
-上記が軌道に乗ったらプログラム書き込み /動作確認用の制御インターフェース(UARTを想定)や外部入出力をメモリマップする機能(そもそもTinyFPGAのERAMはCOMET　IIの RAM空間を満たすほどない、、、7も含めてTinyFPGA上で動くものにしていく予定(はたしていつになることやら)  
+上記が軌道に乗ったらプログラム書き込み /動作確認用の制御インターフェース(UARTを想定)や外部入出力をメモリマップする機能(そもそもTinyFPGAのERAMはCOMET IIのRAM空間(64kB)を満たすほどない、、、も含めてTinyFPGA上で動くものにしていく予定(やる気が出ないのではたしていつになることやら)  
 
  
 ## モジュール構成 
