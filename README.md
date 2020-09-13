@@ -25,7 +25,7 @@ CPUのトップモジュールレベルまではターゲットのFPGAの[Lattic
 
 ## TOPモジュール
 
-``` verilog:COMET_II_top.v(head)
+``` verilog:COMET_II_top.v
 module COMET_II_top (
     //Master Clock
     input mclk,
