@@ -15,11 +15,11 @@ CPUのトップモジュールレベルまではターゲットのFPGAの[Lattic
  
 ## モジュール構成 
 
-*Top Comet_II_topモジュール(レジスタ設定、メモリアクセス)  
- *U1 Comet_II_ALUモジュール(算術演算組み合わせ論理)  
- *U2 Comet_II_Controllerモジュール(コントローラモジュールFSM)  
-  *U2.U11 Comet_II_core_FSM モジュール(コントローラFSM部分及び命令フェッチ機能)  
-  *U2.U11 Comet_II_instrument_decoderモジュール(命令デコーダ組み合わせ論理)  
+* Top Comet_II_topモジュール(レジスタ設定、メモリアクセス)  
+ * U1 Comet_II_ALUモジュール(算術演算組み合わせ論理)  
+ * U2 Comet_II_Controllerモジュール(コントローラモジュールFSM)  
+  * U2.U11 Comet_II_core_FSM モジュール(コントローラFSM部分及び命令フェッチ機能)  
+  * U2.U11 Comet_II_instrument_decoderモジュール(命令デコーダ組み合わせ論理)  
 
 
 
