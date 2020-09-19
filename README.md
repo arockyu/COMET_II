@@ -98,5 +98,12 @@ ALUにFRの更新値算出の機能を集約させているためFRをが設定�
 
 SCV命令は現状実装してない。  
 
+
+## シミュレーション環境
+TinyFPGAno開発環境である[apio](https://apiodoc.readthedocs.io/en/stable/)のapio simコマンドをつかってます。　　
+
+具体的には[icarus Verilog](http://iverilog.icarus.com/)をつかってコード解析、4シミュレーションを実施して、シミュレーション波形を[GTKWave](http://gtkwave.sourceforge.net/)をつかって表示するようになっているようですます。
+
+
 ## テストベンチ
 工事中
