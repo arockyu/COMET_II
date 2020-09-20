@@ -100,8 +100,8 @@ SCV命令は現状実装してない。
 
 
 ## シミュレーション環境
-TinyFPGAno開発環境である[apio](https://apiodoc.readthedocs.io/en/stable/)のapio simコマンドをつかってます。　　
-具体的には[icarus Verilog](http://iverilog.icarus.com/)をつかってコード解析、シミュレーションを実施して、[vvp](https://linux.die.net/man/1/vvp)というコマンドでicarus Verilogの出力を.vcdというファイルに変換しそれを[GTKWave](http://gtkwave.sourceforge.net/)をつかってシミュレーション波形として表示するようになっているようです。  
+TinyFPGAに対応した開発環境である[apio](https://apiodoc.readthedocs.io/en/stable/)のapio simコマンドをつかってます。  
+apioでは具体的には[icarus Verilog](http://iverilog.icarus.com/)というソフトをつかってコード解析、シミュレーションを実施して、[vvp](https://linux.die.net/man/1/vvp)というコマンドでicarus Verilogの出力を.vcdというファイルに変換しそれを[GTKWave](http://gtkwave.sourceforge.net/)をつかってシミュレーション波形として表示するようになっているようです。  
 詳細は勉強中です。(詳しい方教えてくださると幸いです。)
 
 ## テストベンチ
