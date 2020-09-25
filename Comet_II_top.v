@@ -6,6 +6,22 @@
 /*
 /*
 /**************************************************************************/
+    // COMET_II_top Inst_Name(
+    //     .mclk(ck),
+    //     .init(init),
+    //     .rst(1'b0),
+    //     .PR_init(),
+    //     .SP_init(),
+    //     .re(re),
+    //     .raddr(raddr),
+    //     .rdata(rdata),
+    //     .we(we),
+    //     .waddr(waddr),
+    //     .wdata(wdata),
+    //     .stage()
+    // );
+    // defparam Inst_Name.initial_PR = 16'h0000;
+    // defparam Inst_Name.initial_SP = 16'h0000;
 
 module COMET_II_top (
     //Master Clock
