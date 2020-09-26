@@ -2,7 +2,7 @@
 
 [TynyFPGA BX]([https://tinyfpga.com/bx/guide.html)をターゲットとして使ったVerilog HDLとFPGAのお勉強の記録です。
 
-IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.jitec.ipa.go.jp/1_13download/shiken_yougo_ver4_2.pdf)のVerilog HDL moduleでの実現を目指してます
+IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.jitec.ipa.go.jp/1_13download/shiken_yougo_ver4_2.pdf)のVerilog HDL moduleでの実現を目指してます。CPUのアーキテクチャの簡単な復習の意味も込めて。  
 
 現状はCPU core (CoMET_II_top.v) レベルで完成させテストベンチ(top_tb.v)上でのみに組込動作確認している状況です。
 
@@ -101,8 +101,8 @@ SCV命令は現状実装してない。
 
 ## シミュレーション環境
 TinyFPGAに対応した開発環境である[apio](https://apiodoc.readthedocs.io/en/stable/)のapio simコマンドをつかってます。  
-apioでは具体的には[icarus Verilog](http://iverilog.icarus.com/)というソフトをつかってコード解析、シミュレーションを実施して、[vvp](https://linux.die.net/man/1/vvp)というコマンドでicarus Verilogの出力を.vcdというファイルに変換しそれを[GTKWave](http://gtkwave.sourceforge.net/)をつかってシミュレーション波形として表示するようになっているようです。  
-詳細は勉強中です。(詳しい方教えてくださると幸いです。)
+apioではpython環境で動くはFPGAの簡易な開発環境で、シミュレーションでは具体的には[icarus Verilog](http://iverilog.icarus.com/)というソフトをつかってコード解析、シミュレーションを実施して、[vvp](https://linux.die.net/man/1/vvp)というコマンドでicarus Verilogの出力を.vcdというファイルに変換しそれを[GTKWave](http://gtkwave.sourceforge.net/)をつかってシミュレーション波形として表示するようになっているようです。  
+個別のソフトウェアに詳しくなるともっと色々できそうですが、詳細は勉強中です。(詳しい方教えてくださると幸いです。)
 
 ## テストベンチ
 テストベンチで(top_tb.v)ではテスト用に用意した256WordのRAM(test_RAM.v)の初期値として設定したCASLプログラムを動作させてます。  
@@ -111,3 +111,6 @@ apioでは具体的には[icarus Verilog](http://iverilog.icarus.com/)という�
 ## 今後
 テストベンチでどうささせるという最小目的がひと段落したため、ちょっとべつのことに気がいってますが、おいおいターゲット(TineFPGA BX)上で動作させる環境を整備して動かす予定です(GP_RAM_8kW.vとかはその一環)  
 あと本体自体もSVC命令とかその他オリジナルの拡張命令とかもアイデアがあるので組み込んでいってみようとも考えてます。  
+
+* NOP adr \[,x\]の実装
+* 固定乗算、除算
