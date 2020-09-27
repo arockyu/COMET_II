@@ -1,12 +1,21 @@
 /**************************************************************************
 /* COMET II CPU ALU
-/*
+/* Combinational Logic
 /**************************************************************************
-/*
-/*
+/*input [3:0] ALU_OP_type   : Arithmetic Operation type
+/*input [15:0] indata0      : first term input data (in0)
+/*input [15:0] indata1      : second term input data(in1)
+/*output [15:0] result      : result value of operation
+/*output [2:0] FR           : result FR value of operation
+/**************************************************************************/
+/* It's assumed that first designated registor (r,r1) is connected to 
+/* indata0, and seconnd designated registor (r2) or effective address 
+/* value(adr+x) is connected to indata1.
+/* LD operation is included in ALU operations to update FR.In that case,
+/* ALU output FR value to be updated and indata1 value as result.
+/* (Indata0 would be ignored)
 /*
 /**************************************************************************/
-
 
 
 module Comet_II_ALU (

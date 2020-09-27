@@ -1,27 +1,50 @@
-/**************************************************************************
+/************************************************************************************************
 /* COMET II CPU Top
 /*
-/**************************************************************************
-/*
-/*
-/*
-/**************************************************************************/
+/************************************************************************************************
+/* input mclk           : Master Clock input 
+/* input rst            : Reset input (Active high)
+/* input init           : Initialization (*1) and start operation input(Active high)
+/* input [15:0] PR_init : initialized PR valure input (*1)
+/* input [15:0] SP_init : initialized SP valure input (*1)
+/* output re            : RAM read Enable output (Active high)
+/* output [15:0] raddr  : RAM read address output
+/* input  [15:0] rdata  : RAM read data input
+/* output we            : RAM write Enable output (Active high)
+/* output [15:0] waddr  : RAM write address output
+/* output [15:0] wdata  : RAM write data output
+/* output [2:0] stage   : CPU stage output (for debug)
+/***************************************************************************************************
+/* parameter initial_PR : Initial PR valur (default : 0000h)
+/* parameter initial_SP : Initial SP valur (default : 0000h)
+/****************************************************************************************************
+/* NOTICE
+/* (*1) Initialization Function is not implemented so that init signal trigger just start operation
+/*      and PR_init,SP_init values are ignored.
+/****************************************************************************************************
+/* 
+/* 
+/****************************************************************************************************/
+
+// instance creation form (sample)
     // COMET_II_top Inst_Name(
-    //     .mclk(ck),
-    //     .init(init),
+    //     .mclk(),
+    //     .init(),
     //     .rst(1'b0),
     //     .PR_init(),
     //     .SP_init(),
-    //     .re(re),
-    //     .raddr(raddr),
-    //     .rdata(rdata),
-    //     .we(we),
-    //     .waddr(waddr),
-    //     .wdata(wdata),
+    //     .re(),
+    //     .raddr(),
+    //     .rdata(),
+    //     .we(),
+    //     .waddr(),
+    //     .wdata(),
     //     .stage()
     // );
     // defparam Inst_Name.initial_PR = 16'h0000;
     // defparam Inst_Name.initial_SP = 16'h0000;
+
+
 
 module COMET_II_top (
     //Master Clock
