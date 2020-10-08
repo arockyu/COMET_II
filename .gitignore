@@ -5,3 +5,6 @@ hardware.bin
 hardware.json
 top_tb.vcd
 top_tb.out
+*.bat
+*.gtkw
+*.filter
