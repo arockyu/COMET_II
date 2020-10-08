@@ -7,4 +7,5 @@ top_tb.vcd
 top_tb.out
 *.bat
 *.gtkw
-*.filter
+*.flt
+GTKwave_filter

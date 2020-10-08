@@ -52,21 +52,21 @@ module test_RAM1 (
         mem_area[16'h000d] = 16'hf5a0;  // adr = f5a0h
         mem_area[16'h000e] = 16'h1270;  // LAD  r = GR7, x = No Reg 
         mem_area[16'h000f] = 16'h0070;  // adr = 0070h
-        mem_area[16'h0010] = 16'h0000;  // NOP
-        mem_area[16'h0011] = 16'h0000;  // NOP
-        mem_area[16'h0012] = 16'h1108;  // ST   r = GR0, x = GR7
-        mem_area[16'h0013] = 16'h0000;  // adr = 0000h
-        mem_area[16'h0014] = 16'h1001;  // LD   r1 = GR0, r2 = GR1
-        mem_area[16'h0015] = 16'h1107;  // ST   r = GR0, x = GR7
-        mem_area[16'h0016] = 16'h0001;  // adr = 0001h
-        mem_area[16'h0017] = 16'h1127;  // ST   r = GR2, x = GR7
-        mem_area[16'h0018] = 16'h0002;  // adr = 0002h
-        mem_area[16'h0019] = 16'h1137;  // ST   r = GR3, x = GR7
-        mem_area[16'h001a] = 16'h0003;  // adr = 0003h
-        mem_area[16'h001b] = 16'h1147;  // ST   r = GR4, x = GR7
-        mem_area[16'h001c] = 16'h0004;  // adr = 0004h
-        mem_area[16'h001d] = 16'h1157;  // ST   r = GR5, x = GR7
-        mem_area[16'h001e] = 16'h0005;  // adr = 0005h
+        mem_area[16'h0010] = 16'h1107;  // ST   r = GR0, x = GR7
+        mem_area[16'h0011] = 16'h0000;  // adr = 0000h
+        mem_area[16'h0012] = 16'h1401;  // LD   r1 = GR0, r2 = GR1
+        mem_area[16'h0013] = 16'h1107;  // ST   r = GR0, x = GR7
+        mem_area[16'h0014] = 16'h0001;  // adr = 0001h
+        mem_area[16'h0015] = 16'h1127;  // ST   r = GR2, x = GR7
+        mem_area[16'h0016] = 16'h0002;  // adr = 0002h
+        mem_area[16'h0017] = 16'h1137;  // ST   r = GR3, x = GR7
+        mem_area[16'h0018] = 16'h0003;  // adr = 0003h
+        mem_area[16'h0019] = 16'h1147;  // ST   r = GR4, x = GR7
+        mem_area[16'h001a] = 16'h0004;  // adr = 0004h
+        mem_area[16'h001b] = 16'h1157;  // ST   r = GR5, x = GR7
+        mem_area[16'h001c] = 16'h0005;  // adr = 0005h
+        mem_area[16'h001d] = 16'h1167;  // ST   r = GR6, x = GR7
+        mem_area[16'h001e] = 16'h0006;  // adr = 0006h
         mem_area[16'h001f] = 16'h1007;  // LD   r = GR0, x = GR7
         mem_area[16'h0020] = 16'h0000;  // adr = 0000h
         mem_area[16'h0021] = 16'h2401;  // ADDA r1 = GR0, r2 = GR1
@@ -83,15 +83,15 @@ module test_RAM1 (
         mem_area[16'h002c] = 16'h0002;  // adr = 0002h
         mem_area[16'h002d] = 16'h2501;  // SUBA r1 = GR0, r2 = GR1
         mem_area[16'h002e] = 16'h2503;  // SUBA r1 = GR0, r2 = GR3
-        mem_area[16'h002f] = 16'h2707;  // SUBL r = GR0, x = GR77
+        mem_area[16'h002f] = 16'h2307;  // SUBL r = GR0, x = GR77
         mem_area[16'h0030] = 16'h0002;  // adr = 0002h
-        mem_area[16'h0031] = 16'h2301;  // SUBL r1 = GR0, r2 = GR1
-        mem_area[16'h0032] = 16'h2301;  // SUBL r1 = GR0, r2 = GR1
+        mem_area[16'h0031] = 16'h2701;  // SUBL r1 = GR0, r2 = GR1
+        mem_area[16'h0032] = 16'h2701;  // SUBL r1 = GR0, r2 = GR1
         mem_area[16'h0033] = 16'h3406;  // AND  r1 = GR0, r2 = GR6
         mem_area[16'h0034] = 16'h3007;  // AND  r = GR0, x = GR7
         mem_area[16'h0035] = 16'h0000;  // adr = 0000h
-        mem_area[16'h0036] = 16'h3156;  // OR   r1 = GR5, r2 = GR6
-        mem_area[16'h0037] = 16'h3557;  // OR   r = GR5, x = GR7
+        mem_area[16'h0036] = 16'h3556;  // OR   r1 = GR5, r2 = GR6
+        mem_area[16'h0037] = 16'h3157;  // OR   r = GR5, x = GR7
         mem_area[16'h0038] = 16'h0001;  // adr = 0001h
         mem_area[16'h0039] = 16'h1057;  // LD   r = GR5, x = GR7
         mem_area[16'h003a] = 16'h0005;  // adr = 0005h 
@@ -130,8 +130,8 @@ module test_RAM1 (
         mem_area[16'h005b] = 16'h0001;  // adr = 0001h 
         mem_area[16'h005c] = 16'h0000;  // NOP
         mem_area[16'h005d] = 16'h0000;  // NOP
-        mem_area[16'h005e] = 16'h0000;  // NOP
-        mem_area[16'h005f] = 16'h6400;  // JUMP
+        mem_area[16'h005e] = 16'h6400;  // JUMP x = No Reg
+        mem_area[16'h005f] = 16'h0000;  // adr = 0000h 
 
         //Sub-routin Area   : 0060h - 006fh
         mem_area[16'h0060] = 16'h0000;  // NOP
