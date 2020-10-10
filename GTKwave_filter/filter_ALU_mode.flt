@@ -1,0 +1,16 @@
+#ALU mode filter
+0 CPA
+1 CPL
+2 SLL
+3 SRL
+4 SLA
+5 SRA
+7 LD
+8 ADDA
+9 SUBL
+A ADDL
+B SUBL
+C AND
+D OR
+E XOR
+F OFF

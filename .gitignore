@@ -6,6 +6,3 @@ hardware.json
 top_tb.vcd
 top_tb.out
 *.bat
-*.gtkw
-*.flt
-GTKwave_filter
