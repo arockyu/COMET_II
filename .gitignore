@@ -6,4 +6,7 @@ hardware.out
 hardware.json
 top_tb.vcd
 top_tb.out
+top_tb.gtkw
 *.bat
+*.flt
+GTKwave_filter
