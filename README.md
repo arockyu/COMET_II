@@ -6,7 +6,7 @@ IPA 情報処理試験での仮想マシンである[COMET II CPU](https://www.j
 
 現状はCPU core (CoMET_II_top.v) レベルで完成させテストベンチ(top_tb.v)上でのみに組込動作確認している状況です。
 
-テストカバレッジは狭いですがまあおおむね期待の動きをしてくれてます。
+テストカバレッジは狭いですがまあおおむね期待通りの動きをしてくれてます。
 
 CPUのトップモジュールレベルまではターゲットのFPGAの[Lattice iCE40](https://www.latticesemi.com/ja-JP/Products/FPGAandCPLD/iCE40)に依存しないように記述してるつもりです。
 
