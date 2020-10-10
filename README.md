@@ -119,6 +119,12 @@ top_tb.v中のマクロ宣言
 * TEST_RAM2:分岐命令のテスト
 * TEST_RAM3:スタック操作命令(PUSH)、サブルーチン命令(CALL,RET)のテスト
 
+[GTKWave](http://gtkwave.sourceforge.net/)のテストのシミュレーション波形例(TEST_RAM3)
+
+![GTKWave](images/test3_wavform1)
+
+![GTKWave](images/test3_wavform2)
+
 ## 今後
 テストベンチでどうささせるという最小目的がひと段落したため、ちょっとべつのことに気がいってますが、おいおいターゲット(TineFPGA BX)上で動作させる環境を整備して動かす予定です(GP_RAM_8kW.vとかはその一環)  
 あと本体自体もSVC命令とかその他オリジナルの拡張命令とかもアイデアがあるので組み込んでいってみようとも考えてます。  
