@@ -2,6 +2,7 @@
 abc.history
 hardware.asc
 hardware.bin
+hardware.out
 hardware.json
 top_tb.vcd
 top_tb.out
