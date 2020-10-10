@@ -121,9 +121,9 @@ top_tb.v中のマクロ宣言
 
 [GTKWave](http://gtkwave.sourceforge.net/)のテストのシミュレーション波形例(TEST_RAM3)
 
-![GTKWave](images/test3_wavform1)
+![GTKWave](https://raw.githubusercontent.com/arockyu/COMET_II/master/images/test3_wavform1.png)
 
-![GTKWave](images/test3_wavform2)
+![GTKWave](https://raw.githubusercontent.com/arockyu/COMET_II/master/images/test3_wavform2.png)
 
 ## 今後
 テストベンチでどうささせるという最小目的がひと段落したため、ちょっとべつのことに気がいってますが、おいおいターゲット(TineFPGA BX)上で動作させる環境を整備して動かす予定です(GP_RAM_8kW.vとかはその一環)  
