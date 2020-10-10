@@ -6,7 +6,7 @@
 
 `timescale 1ns/1ps
 
-`define TEST_RAM1
+`define TEST_RAM3  // Test RAM Sellect TEST_RAM1-3
 
 
 module top_tb();
@@ -75,6 +75,16 @@ module top_tb();
         .raddr(raddr),
         .rdata(rdata) );
 
+    `elsif TEST_RAM3
+
+    test_RAM3 U102(
+        .mclk(ck),
+        .we(we),
+        .waddr(waddr),
+        .wdata(wdata),
+        .re(re),
+        .raddr(raddr),
+        .rdata(rdata) );
     `endif
 
 endmodule

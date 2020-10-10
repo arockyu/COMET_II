@@ -130,7 +130,7 @@ module COMET_II_top (
 
     //Calculation of Effective Address
     wire [15:0] adr;  //adr Data from Second Word
-    wire  [15:0] eff_adr = (x_r2 != 4'd0) ? adr + GR[x_r2] : adr; //Effective address
+    wire  [15:0] eff_adr = (x_r2 != 4'd0) ? adr + GR[x_r2] : adr; //Effective address (or Immidate Value)
 
     //RAM Write I/F
     assign we = store|push|call;

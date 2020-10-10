@@ -1,6 +1,7 @@
 /**************************************************************************
-/* Psude RAM for  COMET II CPU Test
+/* Psude RAM for  COMET II CPU Test No.１
 /*
+/* Basic Instruction And Alithmetic Instruction test
 /*
 /**************************************************************************/
 
