@@ -6,7 +6,7 @@
 
 `timescale 1ns/1ps
 
-`define TEST_NUM  1 
+`define TEST_RAM1
 
 
 module top_tb();
@@ -53,6 +53,7 @@ module top_tb();
     defparam U101.initial_SP = 16'h0100;  //Force SP to 0100h for fit to test RAM size
 
     
+    `ifdef TEST_RAM1
 
     test_RAM1 U102(
         .mclk(ck),
@@ -62,5 +63,18 @@ module top_tb();
         .re(re),
         .raddr(raddr),
         .rdata(rdata) );
+
+    `elsif TEST_RAM2
+
+    test_RAM2 U102(
+        .mclk(ck),
+        .we(we),
+        .waddr(waddr),
+        .wdata(wdata),
+        .re(re),
+        .raddr(raddr),
+        .rdata(rdata) );
+
+    `endif
 
 endmodule
