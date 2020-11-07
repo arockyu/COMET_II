@@ -5,12 +5,12 @@
 /// Param divide_num : N (Div Parameter)
 /////////////////////////////////////////////
 
-// Instance Creation sample (inst_name is an Instance Name)
+// Instance Format sample
 //
-// divider inst_name(
+// divider inst(
 //   .clk(),
 //   .out());
-//  defparam inst_name.divide_num=1;// N : Div parameter N+1 Divide
+// defparam inst.divide_num=1;// N : Div parameter N+1 Divide
 
 module divider(clk,out);
   //paraetor definition

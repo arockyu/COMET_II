@@ -20,8 +20,7 @@ module top (
         .out(mclk));
     defparam D1.divide_num=1;// N : Div parameter N+1 Divide
 
-
-    reg init = 1'b;
+    reg init = 1'b1;
     wire re,we;
     wire [15:0] raddr,rdata,waddr,wdata;
 

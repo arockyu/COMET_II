@@ -10,3 +10,5 @@ top_tb.gtkw
 *.bat
 *.flt
 GTKwave_filter
+bat
+_Scons

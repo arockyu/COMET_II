@@ -16,8 +16,8 @@ module Program_RAM(
     output [15:0] rdata
 );
 
-    parameter addr_width = 8
-    localparam addr_len = 1<<addr_width-1
+    parameter addr_width = 8;
+    localparam addr_len = 1<<addr_width-1;
 
     reg [15:0] mem_area[addr_len:0] ;  //255 word (adresses  0000h to 00ff  are available)
     wire [15:0] HiZs;
@@ -153,6 +153,5 @@ module Program_RAM(
         mem_area[16'h006e] = 16'h0000;  // NOP
         mem_area[16'h006f] = 16'h0000;  // NOP
     end
-
 
 endmodule

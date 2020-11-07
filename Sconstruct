@@ -1,0 +1,73 @@
+import glob
+
+verilog_basic = glob.glob("Basic_Modules\*.v")
+verilogCOMET_II = glob.glob("Comet_II_modules\*.v")
+verilog_ice40_func = glob.glob("ice40_modules\*.v")
+verilog_Prog_RAM = glob.glob("Program_RAM\*.v")
+
+components = verilog_basic + verilogCOMET_II +  verilog_ice40_func + verilog_Prog_RAM
+
+verilog_top_tb = ["top_tb.v"]
+verilog_top = ["top.v"]
+
+verilog_iCE40_sim = ["C:\\Users\\Anaconda\\.apio\\packages\\toolchain-yosys\\share\\yosys\\ice40\\cells_sim.v"]
+
+synth_sources_list = verilog_top + components
+verify_souces_list = verilog_iCE40_sim + synth_sources_list
+sim_souces_list = verilog_iCE40_sim + verilog_top_tb + components
+
+SCons_folder = "_SCons\\"
+Build_folder = SCons_folder + "Build\\"
+Verify_folder = SCons_folder + "Verification\\"
+Sim_Folder = SCons_folder + "Simulation\\"
+
+pcf_file = "pins.pcf"
+json_file = Build_folder+"hardware.json" 
+asc_file = Build_folder+"hardware.asc"
+bin_file = Build_folder+"hardware.bin"
+
+vcd_file_name = "top_tb.vcd" # simulation dumpout(vvp output)
+
+verify_out_file = Verify_folder + "hardware.out" 
+sim_out_file = Sim_Folder + "top_tb.out" 
+vcd_file = Sim_Folder + vcd_file_name
+gtkw_file = Sim_Folder + "top_tb.gtkw"
+
+import os
+
+mode = ARGUMENTS.get('mode', "build")
+envos =Environment(ENV = os.environ)
+print("%s mode ...." % mode)
+#print(dir(envos))
+
+if(mode =="synth" or mode =="build"):
+    envos.Command(target=json_file,source=synth_sources_list,action=[Mkdir(Build_folder)  
+                                                                    ,"""yosys -p "synth_ice40 -json $TARGET" -q $SOURCES"""])
+if(mode =="place" or mode =="build"):
+    envos.Depends(target=asc_file, dependency=pcf_file)
+    envos.Command(target=asc_file,
+                 source=json_file,
+                 action=[Mkdir(Build_folder) 
+                         ,"nextpnr-ice40 --lp8k --package cm81 --json  $SOURCE --asc $TARGET --pcf %s -q" % pcf_file])
+    envos.Command(target=bin_file,source=asc_file,
+                 action=[Mkdir(Build_folder)
+                        ,"icepack $SOURCE $TARGET"])
+
+if(mode=="verify"):
+    envos.Command(target=verify_out_file,source=verify_souces_list,action=["iverilog -o $TARGET -D VCD_OUTPUT= $SOURCES"])
+
+if(mode=="sim" or mode=="verisim"):
+    envos.Command(target=sim_out_file,source=sim_souces_list,action="iverilog -o $TARGET -D VCD_OUTPUT= $SOURCES")
+    envos.Command(target=vcd_file,source=sim_out_file,action=["vvp $SOURCE"
+                                                             ,Move("$TARGET",vcd_file_name)])
+if(mode=="sim" or mode=="simview"):
+    envos.Command(target="sim_out",source=vcd_file,action="gtkwave $SOURCE %s"%gtkw_file)
+
+
+if(mode=="load"):
+    envos.Execute("tinyprog --pyserial -c COM3 --program %s"%bin_file)
+if(mode=="boot"):
+    envos.Execute("tinyprog -b")
+
+if(mode=="clean"):
+        envos.Execute( Delete(SCons_folder))
